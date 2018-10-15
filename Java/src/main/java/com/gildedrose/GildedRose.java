@@ -1,62 +1,71 @@
 package com.gildedrose;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class GildedRose {
-    Item[] items;
+	Item[] items;
+	List<ItemStrategyWrapper> itemStrategyWrappers;
 
-    public GildedRose(Item[] items) {
-        this.items = items;
-    }
+	private static final int MIN_QUALITY = 0;
+	private static final int MAX_QUALITY = 50;
 
-    public void updateQuality() {
-        for (int i = 0; i < items.length; i++) {
-            if (!items[i].name.equals("Aged Brie")
-                    && !items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                if (items[i].quality > 0) {
-                    if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                        items[i].quality = items[i].quality - 1;
-                    }
-                }
-            } else {
-                if (items[i].quality < 50) {
-                    items[i].quality = items[i].quality + 1;
+	public GildedRose(Item[] items) {
+		this.items = items;
+		itemStrategyWrappers = new ArrayList<>();
+		addStrategiesToItems();
+	}
 
-                    if (items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].sellIn < 11) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
+	private void addStrategiesToItems() {
+		for (final Item item : items) {
+			ItemStrategyWrapper wrapper = new ItemStrategyWrapper();
+			wrapper.setItem(item);
+			
+			if ("Aged Brie".equalsIgnoreCase(item.name)) {
+				wrapper.getStrategies().add(new AgedBrieStrategy());
+				wrapper.getStrategies().add(new DatePassedStrategy());
+			} else if ("Backstage passes to a TAFKAL80ETC concert".equalsIgnoreCase(item.name)) {
+				wrapper.getStrategies().add(new BackstagePassStrategy());
+			} else if ("Conjured".equalsIgnoreCase(item.name)) {
+				// apply the strategy DatePassed twice when 'Conjured'
+				wrapper.getStrategies().add(new DatePassedStrategy());
+				wrapper.getStrategies().add(new DatePassedStrategy());
+			}
+			
+			itemStrategyWrappers.add(wrapper);
+		}
+	}
 
-                        if (items[i].sellIn < 6) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
-                    }
-                }
-            }
+	public void dailyUpdate() {
+		for (final ItemStrategyWrapper itemStrategyWrapper : itemStrategyWrappers) {
+			updateSellIn(itemStrategyWrapper);
+			updateQuality(itemStrategyWrapper);
+		}
+	}
 
-            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                items[i].sellIn = items[i].sellIn - 1;
-            }
+	private void updateSellIn(ItemStrategyWrapper itemStrategyWrapper) {
+		itemStrategyWrapper.getItem().sellIn--;
+	}
 
-            if (items[i].sellIn < 0) {
-                if (!items[i].name.equals("Aged Brie")) {
-                    if (!items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].quality > 0) {
-                            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                                items[i].quality = items[i].quality - 1;
-                            }
-                        }
-                    } else {
-                        items[i].quality = items[i].quality - items[i].quality;
-                    }
-                } else {
-                    if (items[i].quality < 50) {
-                        items[i].quality = items[i].quality + 1;
-                    }
-                }
-            }
-        }
-    }
+	private void updateQuality(ItemStrategyWrapper itemStrategyWrapper) {
+		final Item item = itemStrategyWrapper.getItem();
+
+		for (final UpdateStrategy updateStrategy : itemStrategyWrapper.getStrategies()) {
+			if (!updateStrategy.isRelevant(item))
+				continue;
+
+			int change = updateStrategy.calculateChange(item);
+			setQualityForItem(item, change);
+		}
+	}
+	
+	private void setQualityForItem(final Item item, final int change) {
+		item.quality += change;
+
+		if (item.quality < MIN_QUALITY)
+			item.quality = MIN_QUALITY;
+
+		if (item.quality > MAX_QUALITY)
+			item.quality = MAX_QUALITY;
+	}
 }
