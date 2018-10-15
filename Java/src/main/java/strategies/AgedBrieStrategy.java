@@ -26,4 +26,9 @@ private Item item;
 		return item;
 	}
 
+	@Override
+	public int getMaxQuality() {
+		return 50;
+	}
+
 }

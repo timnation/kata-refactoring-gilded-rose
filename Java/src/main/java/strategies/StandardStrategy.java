@@ -25,6 +25,11 @@ private Item item;
 	public Item getItem() {
 		return item;
 	}
+
+	@Override
+	public int getMaxQuality() {
+		return 50;
+	}
 	
 	
 

@@ -12,22 +12,14 @@ private Item item;
 
 	@Override
 	public int getQualityUpdateValue() {
-		 if (sellInLessThenFiveDays()) {
+		 if (item.sellIn < 6) {
              return 3;
 		 }
             
-         if (sellInInLessThenTenDays()) {
+         if (item.sellIn < 11) {
              return 2;
          }      
-		return 1;
-	}
-
-	private boolean sellInInLessThenTenDays() {
-		return item.sellIn < 11;
-	}
-
-	private boolean sellInLessThenFiveDays() {
-		return item.sellIn < 6;
+		return item.sellIn < 0 ? -item.quality : 1;
 	}
 
 	@Override
@@ -39,6 +31,11 @@ private Item item;
 	@Override
 	public Item getItem() {
 		return item;
+	}
+
+	@Override
+	public int getMaxQuality() {
+		return 50;
 	}
 
 }

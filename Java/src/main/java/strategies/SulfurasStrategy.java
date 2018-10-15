@@ -25,6 +25,11 @@ public class SulfurasStrategy implements ItemUpdateStrategy {
 	public Item getItem() {
 		return item;
 	}
+
+	@Override
+	public int getMaxQuality() {
+		return 80;
+	}
 	
 	
 
