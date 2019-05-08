@@ -16,13 +16,21 @@ public class GildedRoseTest {
             items.add(numberedBrie);
         }
 
-        GildedRose gildedRose = new GildedRose(items.toArray(new Item[]{}));
-
-        for (int i = 0; i < 22; i++) {
-            gildedRose.updateQuality();
-            items.stream().map(Item::toString).forEach(System.out::println);
+        Item[] legacyArray = items.toArray(new Item[] {});
+        Item[] newArray = items.toArray(new Item[] {});
+        
+        GildedRose gildedRose = new GildedRose(legacyArray);
+        GildedRoseNew gildedRoseNew = new GildedRoseNew(newArray);
+        
+        gildedRose.updateQuality();
+        gildedRoseNew.updateQuality();
+       
+        for(int i = 0; i <= legacyArray.length; i++) {
+        	legacyArray[i].equals(newArray[i]);
+        	System.out.println(legacyArray[i] + ":" + newArray[i]);
+        }
+          
         }
 
-
     }
-}
+
