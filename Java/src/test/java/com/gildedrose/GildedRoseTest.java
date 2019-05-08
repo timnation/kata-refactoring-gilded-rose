@@ -1,18 +1,24 @@
 package com.gildedrose;
 
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import org.junit.Test;
 
 public class GildedRoseTest {
 
     @Test
     public void doTestSomeThing() {
-        Item brie = new Item("Aged Brie", 20, 50);
+    	String[] names = {"Aged Brie","Backstage passes to a TAFKAL80ETC concert","Sulfuras, Hand of Ragnaros"}; 
+    	
+
+    	
+    	
         List<Item> items = new ArrayList<>();
         for (int i = 0; i <= 100; i++) {
-            Item numberedBrie = new Item("Aged Brie", 20, i);
+   
+// 
             items.add(numberedBrie);
         }
 
@@ -25,9 +31,10 @@ public class GildedRoseTest {
         gildedRose.updateQuality();
         gildedRoseNew.updateQuality();
        
-        for(int i = 0; i <= legacyArray.length; i++) {
-        	legacyArray[i].equals(newArray[i]);
-        	System.out.println(legacyArray[i] + ":" + newArray[i]);
+        for(int i = 0; i <= legacyArray.length -1; i++) {
+        	boolean equals = legacyArray[i].equals(newArray[i]);
+        	
+        	System.out.println(legacyArray[i] + " : " + newArray[i]+ " : " + equals);
         }
           
         }
