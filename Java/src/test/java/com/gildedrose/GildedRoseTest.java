@@ -3,6 +3,7 @@ package com.gildedrose;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,35 +38,17 @@ public class GildedRoseTest {
 		generateLegacyOutput(legacyItems);
 		generateNewSystemOutput(newItems);
 
-		assertEquals(legacyItems.toString(), newItems.toString());
+		//assertEquals(legacyItems.toString(), newItems.toString());
+		assertTrue(legacyItems.equals(newItems));
 	}
 
 	private List<Item> generateMockData() {
 		List<Item> mockItems = new ArrayList<>();
-		
-		//List<String> productnames = new ArrayList<>(){ "Aged Brie", "Sulfuras, Hand of Ragnaros" };
 
 		mockItems.addAll(generateProductItems("Aged Brie", 20, 100));
-		
-		for (int i = 0; i <= 100; i++) {
-			Item numberedItem = new Item("Aged Brie", 20, i);
-			mockItems.add(numberedItem);
-		}
-
-		for (int i = 0; i <= 100; i++) {
-			Item numberedItem = new Item("Sulfuras, Hand of Ragnaros", 20, i);
-			mockItems.add(numberedItem);
-		}
-
-		for (int i = 0; i <= 100; i++) {
-			Item numberedItem = new Item("Backstage passes to a TAFKAL80ETC concert", 20, i);
-			mockItems.add(numberedItem);
-		}
-
-		for (int i = 0; i <= 100; i++) {
-			Item numberedItem = new Item("not available", 20, i);
-			mockItems.add(numberedItem);
-		}
+		mockItems.addAll(generateProductItems("Sulfuras, Hand of Ragnaros", 20, 100));
+		mockItems.addAll(generateProductItems("Backstage passes to a TAFKAL80ETC concert", 20, 100));
+		mockItems.addAll(generateProductItems("not available", 20, 100));
 
 		return mockItems;
 	}
