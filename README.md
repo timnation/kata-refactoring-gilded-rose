@@ -47,3 +47,12 @@ I've also set this kata up on [cyber-dojo](http://cyber-dojo.org) for several la
 I analysed this repo according to the clean code standards on [Better Code Hub](https://bettercodehub.com) just to get an independent opinion of how bad the code is. Perhaps unsurprisingly, the compliance score is low!
 
 [![BCH compliance](https://bettercodehub.com/edge/badge/emilybache/GildedRose-Refactoring-Kata?branch=master)](https://bettercodehub.com/) 
+
+## Aufgabe I
+Hmm der Test scheint nicht korrekt zu funktionieren, kannst du den "Golden"-Test beheben?
+Entwickelt sich der Wert der Proukte im Laufe der Zeit unterschiedlich? Skizziere den Verlauf der einzelnen Produkte.
+
+## Aufgabe II
+Jetzt wo wir uns sicher sein können, dass wir nichts kaputt machen, wird es an der Zeit den Code lesbarer zu machen!
+
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/modernSE/kata-refactoring-gilded-rose) 

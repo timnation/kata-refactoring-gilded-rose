@@ -1,0 +1,4 @@
+checkoutLocation: "gilded-rose-kata"
+workspaceLocation: "./gilded-rose-kata/Java"
+tasks:
+  - init: mvn install -DskipTests=true
